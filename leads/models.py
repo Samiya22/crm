@@ -16,7 +16,7 @@ class Lead(models.Model):
 
 
     def __str__(self):
-        return self.familyasi
+        return str(self.familyasi)
 
 
 
@@ -25,4 +25,4 @@ class Agent(models.Model):
 
 
     def __str__(self):
-        return self.user
+        return str(self.user)

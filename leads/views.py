@@ -1,9 +1,15 @@
+from multiprocessing import context
 from django.shortcuts import render
-from django.http import HttpResponse
-
+from . import models
 
 
 def home(request):
-    return HttpResponse("Django crm")
+
+    leads = models.Lead.objects.all()
+
+    context = {
+       "leads": leads
+    }
+    return render(request, "index.html", context)
 
 
