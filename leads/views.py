@@ -3,13 +3,13 @@ from django.shortcuts import render
 from . import models
 
 
-def home(request):
+def leads_lists(request):
 
     leads = models.Lead.objects.all()
 
     context = {
        "leads": leads
     }
-    return render(request, "index.html", context)
+    return render(request, "leads_lists", context)
 
 
