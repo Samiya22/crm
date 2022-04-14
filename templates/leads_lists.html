@@ -5,17 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>crm</title>
+    <style>
+        .mijoz{
+            padding: 15px, 8px, 15px, 8px;
+            margin-top: 10px;
+            background-color: antiquewhite;
+            font-size: 21px;
+            font-family: Arial, Arial, Helvetica, sans-serif; 
+            width: 100%;
+           }
+    </style>
 </head>
 <body>
 
 
-   
-    <ul>
-        {% for lead in leads %}
-        <li>{{lead}}</li>
-        {% endfor %}
-    </ul>
-
+   {% for lead in leads %}
+        <div class="mijoz">{{ lead.ismi }} {{ lead.familyasi }} {{ lead.yoshi }}</div>
+   {% endfor %}
     
 </body>
 </html>
