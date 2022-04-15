@@ -21,7 +21,10 @@
     <h1>Mijozlar</h1>
 
    {% for lead in leads %}
-        <div class="mijoz">{{ lead.ismi }} {{ lead.familyasi }} {{ lead.yoshi }}</div>
+        <div class="mijoz">
+            <a href="/leads/{{ lead.pk }}/" class="mijoz">{{ lead.ismi }} {{ lead.familyasi }} </a>
+            {{ lead.yoshi }}            
+        </div>
    {% endfor %}
     
 </body>
