@@ -1,6 +1,7 @@
 from multiprocessing import context
 from django.shortcuts import get_object_or_404, render
 from . import models
+from .forms import *
 
 
 def leads_lists(request):
@@ -12,7 +13,7 @@ def leads_lists(request):
     }
     return render(request, "leads_lists.html", context)
 
-def leads_detail(request, pk):
+def lead_detail(request, pk):
    lead = get_object_or_404(models.Lead, id=pk)
 
    context = {
@@ -21,3 +22,9 @@ def leads_detail(request, pk):
    return render(request, "detailes.html", context)
 
 
+def lead_create(request):
+   print(request.POST)
+   context = {
+      "forms": LeadForm()
+   }
+   return render(request, "create.html", context)
