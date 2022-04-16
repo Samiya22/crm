@@ -1,4 +1,5 @@
 from multiprocessing import context
+from pyexpat import model
 from django.shortcuts import get_object_or_404, render
 from . import models
 from .forms import *
@@ -23,8 +24,23 @@ def lead_detail(request, pk):
 
 
 def lead_create(request):
-   print(request.POST)
+   forms = LeadForm()
+   if request.method == "POST":
+      form = LeadForm(request.POST)
+      if form.is_valid():
+         print(form.cleaned_data)
+         ismi = form.cleaned_data["ismi"]
+         familyasi = form.cleaned_data["familyasi"]
+         yoshi = form.cleaned_data["yoshi"]
+         agent = models.Agent.objects.first()
+         models.Lead.objects.create(
+            ismi=ismi,
+            familyasi=familyasi,
+            yoshi=yoshi,
+            agent=agent,
+         )
+         print("Muvoffaqiyat")
    context = {
-      "forms": LeadForm()
+      "forms": forms
    }
    return render(request, "create.html", context)
