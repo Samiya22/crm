@@ -1,8 +1,8 @@
-from multiprocessing import context
-from pyexpat import model
-from django.shortcuts import get_object_or_404, render
+from multiprocessing import context 
+from django.shortcuts import get_object_or_404, render, redirect
 from . import models
 from .forms import *
+from pyexpat import model
 
 
 def leads_lists(request):
@@ -14,6 +14,8 @@ def leads_lists(request):
     }
     return render(request, "leads_lists.html", context)
 
+
+
 def lead_detail(request, pk):
    lead = get_object_or_404(models.Lead, id=pk)
 
@@ -23,24 +25,24 @@ def lead_detail(request, pk):
    return render(request, "detailes.html", context)
 
 
+
 def lead_create(request):
-   forms = LeadForm()
+   form = LeadModelForm()
    if request.method == "POST":
-      form = LeadForm(request.POST)
+      form = LeadModelForm(request.POST)
       if form.is_valid():
-         print(form.cleaned_data)
-         ismi = form.cleaned_data["ismi"]
-         familyasi = form.cleaned_data["familyasi"]
-         yoshi = form.cleaned_data["yoshi"]
-         agent = models.Agent.objects.first()
-         models.Lead.objects.create(
-            ismi=ismi,
-            familyasi=familyasi,
-            yoshi=yoshi,
-            agent=agent,
-         )
-         print("Muvoffaqiyat")
+         form.save()
+         return redirect("/leads")
    context = {
-      "forms": forms
+      "forms": form
    }
    return render(request, "create.html", context)
+
+
+def lead_update(request, pk):
+   lead = get_object_or_404(models.Lead, id=pk)
+
+   context = {
+      "lead": lead
+   }
+   return render(request, "update.html", context)
