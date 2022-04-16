@@ -40,9 +40,28 @@ def lead_create(request):
 
 
 def lead_update(request, pk):
-   lead = get_object_or_404(models.Lead, id=pk)
+   lead = models.Lead.objects.get (id=pk)
+   form = LeadModelForm(instance=lead)
+   if request.method == "POST":
+      form = LeadModelForm(request.POST, instance=lead)
+      if form.is_valid():
+         ismi = form.cleaned_data["ismi"]
+         familyasi = form.cleaned_data["familyasi"]
+         yoshi = form.cleaned_data["yoshi"]
+         lead.ismi = ismi
+         lead.familyasi = familyasi
+         lead.yoshi = yoshi
+         form.save()
+         return redirect("/leads")
 
    context = {
+      "form": form,
       "lead": lead
    }
    return render(request, "update.html", context)
+
+
+def lead_delete(request, pk):
+   lead = models.Lead.objects.get (id=pk)
+   lead.delete()
+   return redirect("/leads")
