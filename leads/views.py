@@ -1,47 +1,44 @@
-from multiprocessing import context 
-from django.shortcuts import get_object_or_404, render, redirect
-
+from django.shortcuts import render, redirect, reverse
+from django.views.generic import TemplateView, ListView, DetailView, CreateView
 from . import models
 from .forms import *
-from pyexpat import model
+
+class HomeView(TemplateView):
+   template_name = "home.html"
+
+class ListsView(ListView):
+   template_name = "leads_lists.html"
+   queryset =  models.Lead.objects.all()
+   context_object_name = "leads"
 
 
-def home(request):
-   return render (request, "home.html")
+class LeadDetailView(DetailView):
+   template_name = "details.html"
+   queryset =  models.Lead.objects.all()
+   context_object_name = "lead"
 
 
-def leads_lists(request):
+class LeadCreateView(CreateView):
+   template_name = "create.html"
+   form_class = LeadModelForm
 
-    leads = models.Lead.objects.all()
-
-    context = {
-      "leads": leads
-    }
-    return render(request, "leads_lists.html", context)
-
-
-
-def lead_detail(request, pk):
-   lead = get_object_or_404(models.Lead, id=pk)
-
-   context = {
-      "lead": lead
-   }
-   return render(request, "details.html", context)
+   def get_success_url(self):
+      return reverse('leads:listlar')
 
 
 
-def lead_create(request):
-   form = LeadModelForm()
-   if request.method == "POST":
-      form = LeadModelForm(request.POST)
-      if form.is_valid():
-         form.save()
-         return redirect("/leads")
-   context = {
-      "forms": form
-   }
-   return render(request, "create.html", context)
+
+# def lead_create(request):
+#    form = LeadModelForm()
+#    if request.method == "POST":
+#       form = LeadModelForm(request.POST)
+#       if form.is_valid():
+#          form.save()
+#          return redirect("/leads")
+#    context = {
+#       "forms": form
+#    }
+#    return render(request, "create.html", context)
 
 
 def lead_update(request, pk):
