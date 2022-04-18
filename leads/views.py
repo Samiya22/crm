@@ -1,5 +1,6 @@
 from multiprocessing import context 
 from django.shortcuts import get_object_or_404, render, redirect
+
 from . import models
 from .forms import *
 from pyexpat import model
@@ -26,7 +27,7 @@ def lead_detail(request, pk):
    context = {
       "lead": lead
    }
-   return render(request, "detailes.html", context)
+   return render(request, "details.html", context)
 
 
 
