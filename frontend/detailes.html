@@ -1,20 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijoz ma'lumotlari</title>
-</head>
-<body>
+{% extends 'base.html'%}
+
+{% block title %} Mijoz ma'lumotlari {% endblock%}
+
+{% block content %}
     <a href="/leads">Mijozlar bo'limi</a>
 
     <h1>Mijoz ma'lumotlari:</h1>
     <h3> ismi: {{ lead.ismi }} </h3>
     <h3> familyasi: {{ lead.familyasi }} </h3>
     <h3> yoshi: {{ lead.yoshi }} </h3>
-    <a href="/leads/{{ lead.pk }}/update">O'zgartirish</a>
-    <a href="/leads/{{ lead.pk }}/delete">O'chirish</a>
+    <a href="{% url 'leads:ozgartirish' lead.pk %}">O'zgartirish</a>
+    <a href="{% url 'leads:ochirish' lead.pk %}">O'chirish</a>
 
-</body>
-</html>
+{% endblock %}
