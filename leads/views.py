@@ -5,6 +5,10 @@ from .forms import *
 from pyexpat import model
 
 
+def home(request):
+   return render (request, "home.html")
+
+
 def leads_lists(request):
 
     leads = models.Lead.objects.all()
