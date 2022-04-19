@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from . import models
 from .forms import *
@@ -13,19 +14,19 @@ class SignupView(CreateView):
 class HomeView(TemplateView):
    template_name = "home.html"
 
-class ListsView(ListView):
+class ListsView(LoginRequiredMixin, ListView):
    template_name = "leads_lists.html"
    queryset =  models.Lead.objects.all()
    context_object_name = "leads"
 
 
-class LeadDetailView(DetailView):
+class LeadDetailView(LoginRequiredMixin, DetailView):
    template_name = "details.html"
    queryset =  models.Lead.objects.all()
    context_object_name = "lead"
 
 
-class LeadCreateView(CreateView):
+class LeadCreateView(LoginRequiredMixin, CreateView):
    template_name = "leads/create.html"
    form_class = LeadModelForm
 
@@ -34,7 +35,7 @@ class LeadCreateView(CreateView):
 
 
 
-class LeadUpdateView(UpdateView):
+class LeadUpdateView(LoginRequiredMixin, UpdateView):
    template_name = "leads/update.html"
    form_class = LeadModelForm
    queryset =  models.Lead.objects.all()
@@ -58,7 +59,7 @@ def lead_update(request, pk):
    return render(request, "update.html", context)
 
 
-class LeadDeleteView(DeleteView):
+class LeadDeleteView(LoginRequiredMixin, DeleteView):
    template_name = "leads/delete.html"
    form_class = LeadModelForm
    queryset =  models.Lead.objects.all()
