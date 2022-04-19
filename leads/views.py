@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse
-from django.views.generic import TemplateView, ListView, DetailView, CreateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
 from . import models
 from .forms import *
 
@@ -19,7 +19,7 @@ class LeadDetailView(DetailView):
 
 
 class LeadCreateView(CreateView):
-   template_name = "create.html"
+   template_name = "leads/create.html"
    form_class = LeadModelForm
 
    def get_success_url(self):
@@ -27,18 +27,13 @@ class LeadCreateView(CreateView):
 
 
 
-
-# def lead_create(request):
-#    form = LeadModelForm()
-#    if request.method == "POST":
-#       form = LeadModelForm(request.POST)
-#       if form.is_valid():
-#          form.save()
-#          return redirect("/leads")
-#    context = {
-#       "forms": form
-#    }
-#    return render(request, "create.html", context)
+class LeadUpdateView(UpdateView):
+   template_name = "leads/update.html"
+   form_class = LeadModelForm
+   queryset =  models.Lead.objects.all()
+   
+   def get_success_url(self):
+      return reverse('leads:listlar')
 
 
 def lead_update(request, pk):
