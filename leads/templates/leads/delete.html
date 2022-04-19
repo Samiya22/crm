@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %} Mijoz yaratish {% endblock %}
+
+{% block content %}
+
+    <a href="/leads/">O'chirish</a>
+    <br>
+    <h1>Fo'rmani o'chirishga rozimisiz ?</h1>
+    <form method="post">
+        <p>
+        {% csrf_token %} 
+        {{ form.as_p }}
+        <button type="submit">O'chirish</button>
+    </form>
+
+{% endblock %}

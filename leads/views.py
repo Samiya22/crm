@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse
-from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from . import models
 from .forms import *
 
@@ -42,15 +42,8 @@ def lead_update(request, pk):
    if request.method == "POST":
       form = LeadModelForm(request.POST, instance=lead)
       if form.is_valid():
-         ismi = form.cleaned_data["ismi"]
-         familyasi = form.cleaned_data["familyasi"]
-         yoshi = form.cleaned_data["yoshi"]
-         lead.ismi = ismi
-         lead.familyasi = familyasi
-         lead.yoshi = yoshi
          form.save()
          return redirect("/leads")
-
    context = {
       "form": form,
       "lead": lead
@@ -58,7 +51,12 @@ def lead_update(request, pk):
    return render(request, "update.html", context)
 
 
-def lead_delete(request, pk):
-   lead = models.Lead.objects.get (id=pk)
-   lead.delete()
-   return redirect("/leads")
+class LeadDeleteView(DeleteView):
+   template_name = "leads/delete.html"
+   form_class = LeadModelForm
+   queryset =  models.Lead.objects.all()
+
+   def get_success_url(self):
+      return reverse('leads:listlar')
+
+
