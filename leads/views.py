@@ -1,70 +1,57 @@
-from django.shortcuts import render, redirect, reverse
+from django.core.mail import send_mail
+from django.shortcuts import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
-from . import models
+from .models import *
 from .forms import *
 
-class SignupView(CreateView):
-   template_name = "registration/signup.html"
-   form_class = NewUserForm
-
-   def get_success_url(self):
-      return reverse('leads:listlar')
+class SigupView(CreateView):
+    template_name = "registration/signup.html"
+    form_class = NewUserForm
+    
+    def get_success_url(self):
+        return reverse("leads:lead-list")
 
 class HomeView(TemplateView):
-   template_name = "home.html"
+    template_name = "home.html"
 
-class ListsView(LoginRequiredMixin, ListView):
-   template_name = "leads_lists.html"
-   queryset =  models.Lead.objects.all()
-   context_object_name = "leads"
-
+class LeadListView(LoginRequiredMixin, ListView):
+    template_name = "leads/leads_list.html"
+    queryset = Lead.objects.all()
+    context_object_name = "leads"
 
 class LeadDetailView(LoginRequiredMixin, DetailView):
-   template_name = "details.html"
-   queryset =  models.Lead.objects.all()
-   context_object_name = "lead"
+    template_name = "leads/leads_detail.html"
+    queryset = Lead.objects.all()
+    context_object_name = "lead"
 
+class LeadCreateView(LoginRequiredMixin, CreateView):   
+    template_name = "leads/leads_create.html"
+    form_class = LeadModelForm
+    
+    def get_success_url(self):
+        return reverse("leads:lead-list")
 
-class LeadCreateView(LoginRequiredMixin, CreateView):
-   template_name = "leads/create.html"
-   form_class = LeadModelForm
-
-   def get_success_url(self):
-      return reverse('leads:listlar')
-
-
+    # def form_valid(self, form):
+    #     send_mail(
+    #         subject="Bu lead yaratilingan",
+    #         message="Yangi lead yarat",
+    #         from_email="test@test.com",
+    #         recipient_list=["test2@test.com"],
+    #     )
+    #     return super(LeadCreateView, self).form_valid(form)
 
 class LeadUpdateView(LoginRequiredMixin, UpdateView):
-   template_name = "leads/update.html"
-   form_class = LeadModelForm
-   queryset =  models.Lead.objects.all()
-   
-   def get_success_url(self):
-      return reverse('leads:listlar')
-
-
-def lead_update(request, pk):
-   lead = models.Lead.objects.get (id=pk)
-   form = LeadModelForm(instance=lead)
-   if request.method == "POST":
-      form = LeadModelForm(request.POST, instance=lead)
-      if form.is_valid():
-         form.save()
-         return redirect("/leads")
-   context = {
-      "form": form,
-      "lead": lead
-   }
-   return render(request, "update.html", context)
-
+    template_name = "leads/leads_update.html"
+    queryset = Lead.objects.all()
+    form_class = LeadModelForm
+    
+    def get_success_url(self):
+        return reverse("leads:lead-list")
 
 class LeadDeleteView(LoginRequiredMixin, DeleteView):
-   template_name = "leads/delete.html"
-   form_class = LeadModelForm
-   queryset =  models.Lead.objects.all()
-
-   def get_success_url(self):
-      return reverse('leads:listlar')
-
-
+    template_name = "leads/leads_delete.html"
+    queryset = Lead.objects.all()
+    
+    def get_success_url(self):
+        return reverse("leads:lead-list")

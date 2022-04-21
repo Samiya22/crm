@@ -10,14 +10,14 @@ class LeadModelForm(forms.ModelForm):
         model = Lead
         fields = (
             "ismi",
-            "familyasi",
+            "familiyasi",
             "yoshi",
             "agent"
         )
 
 class LeadForm(forms.Form):
     ismi = forms.CharField(max_length=20)
-    familyasi = forms.CharField(max_length=20)
+    familiyasi = forms.CharField(max_length=20)
     yoshi = forms.IntegerField(min_value=0)
 
 class NewUserForm(UserCreationForm):

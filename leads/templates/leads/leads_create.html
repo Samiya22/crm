@@ -4,14 +4,14 @@
 
 {% block content %}
 
-    <a href="/leads/">O'chirish</a>
-    <br>
-    <h1>Fo'rmani o'chirishga rozimisiz ?</h1>
+    <a href="/leads/">Mijozlar bo'limi</a>
+
     <form method="post">
         <p>
         {% csrf_token %} 
+        <br>
         {{ form.as_p }}
-        <button type="submit">O'chirish</button>
+        <button type="submit">Jo'natish</button>
     </form>
 
 {% endblock %}
