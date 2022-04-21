@@ -1,3 +1,10 @@
-from django.shortcuts import render
+from re import template
+from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
+from leads.models import Agent
 
-# Create your views here.
+class AgentListView(LoginRequiredMixin, generic.ListView):
+    template_name = "agents/list.html"
+
+    def get_queryset(self):
+        return Agent.objects.all()
