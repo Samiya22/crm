@@ -1,6 +1,7 @@
-from re import template
 from django.views import generic
+from django.urls import reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from .forms import AgentModelForm
 from leads.models import Agent
 
 class AgentListView(LoginRequiredMixin, generic.ListView):
@@ -8,3 +9,11 @@ class AgentListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Agent.objects.all()
+
+
+class AgentCreateView(LoginRequiredMixin, generic.CreateView):
+    template_name  = "agents/create.html"
+    form_class = AgentModelForm
+
+    def get_success_url(self):
+        return reverse ('agent:agent-list')
