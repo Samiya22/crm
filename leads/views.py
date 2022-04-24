@@ -126,7 +126,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
         return queryset
 
 
-class CategoryDetailView(LoginRequiredMixin, DeleteView):
+class CategoryDetailView(LoginRequiredMixin, DetailView):
 
     template_name = "leads/category_detail.html"
     context_object_name = "categories"
