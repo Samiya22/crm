@@ -129,7 +129,7 @@ class CategoryListView(LoginRequiredMixin, ListView):
 class CategoryDetailView(LoginRequiredMixin, DetailView):
 
     template_name = "leads/category_detail.html"
-    context_object_name = "categories"
+    context_object_name = "category"
 
     def get_queryset(self):
         user = self.request.user
