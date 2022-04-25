@@ -1,13 +1,18 @@
 {% extends 'base.html' %}
-
-{% block title %} SUCRM - SignUp {% endblock %}
+{% load tailwind_filters %}
 
 {% block content %}
-    <form method="post">
-        <p>
-        {% csrf_token %} 
-        <br>
-        {{ form.as_p }}
-        <button type="submit">Signup</button>
+
+<div class="max-w-lg mx-auto">
+    <form method="post" class="mt-5">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <button type='submit' class="w-full text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-md">
+            Ro'yxatdan o'tish
+        </button>
     </form>
-{% endblock %}
+    <div class="py-5 border-t border-gray-200 mt-5">
+        <a class="hover:text-blue-500" href="{% url 'login' %}">Accountim mavjud?</a>
+    </div>
+</div>
+{% endblock content %}

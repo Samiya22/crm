@@ -2,11 +2,10 @@
 <header class="text-gray-600 body-font">
   <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
     <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
-      <img src="{% static 'img/logo-dark.png' %}" style="width: 80px;" alt="Logo">
-      <span class="ml-3 text-xl">SUSYS Academy</span>
-    </a>
+      <img src="{% static 'images/logo.png' %}" style="width: 80px;" alt="Logo">
+    </a> 
     <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-      <a href="/" class="mr-5 hover:text-gray-900">Home</a>
+      <a href="/" class="mr-5 hover:text-gray-900">Asosiy</a>
 
     {% if not request.user.is_authenticated %}
       </nav>
@@ -14,13 +13,13 @@
           <a  href="{% url 'signup' %}">Ro'yxatdan o'tish
           </a>
         </button>
-    {% else %}
+      {% else %}
       {% if request.user.is_organisor %}
         <a href="/agents/" class="mr-5 hover:text-gray-900">Agentlar</a>
       {% endif %}
         <a href="/leads/" class="mr-5 hover:text-gray-900">Mijozlar</a>
       </nav>
-    {% endif %}
+    {% endif %} 
 
     {% if request.user.is_authenticated %}
       Foydalanuvchi: {{ request.user.username }}
